@@ -1,5 +1,9 @@
 package com.crave.crave_backend.entity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,21 +44,20 @@ public class Restaurant {
 	@Column(nullable = false)
 	private String countryName;
 	
-	public Restaurant() {}
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public Restaurant(Long userId, String name, String contactNumber, String email,
-                      Long buildingNumber, String cityName, String pinCode,
-                      String stateName, String countryName) {
-        this.userId = userId;
-        this.name = name;
-        this.contactNumber = contactNumber;
-        this.email = email;
-        this.buildingNumber = buildingNumber;
-        this.cityName = cityName;
-        this.pinCode = pinCode;
-        this.stateName = stateName;
-        this.countryName = countryName;
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
     public Long getId() {
         return id;
@@ -122,6 +125,22 @@ public class Restaurant {
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
+    
+    public Restaurant() {}
+
+    public Restaurant(Long userId, String name, String contactNumber, String email,
+                      Long buildingNumber, String cityName, String pinCode,
+                      String stateName, String countryName) {
+        this.userId = userId;
+        this.name = name;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.buildingNumber = buildingNumber;
+        this.cityName = cityName;
+        this.pinCode = pinCode;
+        this.stateName = stateName;
+        this.countryName = countryName;
+    }
 
     @Override
     public String toString() {
@@ -138,4 +157,27 @@ public class Restaurant {
                 ", countryName='" + countryName + '\'' +
                 '}';
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(buildingNumber, cityName, contactNumber, countryName, createdAt, email, id, name, pinCode,
+				stateName, updatedAt, userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Restaurant other = (Restaurant) obj;
+		return Objects.equals(buildingNumber, other.buildingNumber) && Objects.equals(cityName, other.cityName)
+				&& Objects.equals(contactNumber, other.contactNumber) && Objects.equals(countryName, other.countryName)
+				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(pinCode, other.pinCode) && Objects.equals(stateName, other.stateName)
+				&& Objects.equals(updatedAt, other.updatedAt) && Objects.equals(userId, other.userId);
+	}
 }

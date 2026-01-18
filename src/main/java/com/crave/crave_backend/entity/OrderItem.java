@@ -1,6 +1,10 @@
 package com.crave.crave_backend.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +30,21 @@ public class OrderItem {
 	@Column(nullable = false)
 	@Digits(integer = 6, fraction = 2)
 	private BigDecimal unitPrice;
+	
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 	
 	public Long getId() {
         return id;
@@ -59,9 +78,8 @@ public class OrderItem {
         this.unitPrice = unitPrice;
     }
 
-    public OrderItem(Long id, Long orderId, Long menuItemId, Integer quantity, BigDecimal unitPrice) {
+    public OrderItem(Long orderId, Long menuItemId, Integer quantity, BigDecimal unitPrice) {
         super();
-        this.id = id;
         this.orderId = orderId;
         this.menuItemId = menuItemId;
         this.quantity = quantity;
@@ -78,4 +96,24 @@ public class OrderItem {
                 + ", quantity=" + quantity 
                 + ", unitPrice=" + unitPrice + "]";
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(createdAt, id, menuItemId, orderId, quantity, unitPrice, updatedAt);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderItem other = (OrderItem) obj;
+		return Objects.equals(createdAt, other.createdAt) && Objects.equals(id, other.id)
+				&& Objects.equals(menuItemId, other.menuItemId) && Objects.equals(orderId, other.orderId)
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(unitPrice, other.unitPrice)
+				&& Objects.equals(updatedAt, other.updatedAt);
+	}
 }

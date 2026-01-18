@@ -2,6 +2,10 @@ package com.crave.crave_backend.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import com.crave.crave_backend.enums.OrderState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +42,21 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderState orderState;
 	
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+	
 	public Long getId() {
         return id;
     }
@@ -70,9 +89,8 @@ public class Order {
         this.orderState = orderState;
     }
 
-    public Order(Long id, Long userId, Long restaurantId, BigDecimal totalPrice, LocalDate date, OrderState orderState) {
+    public Order(Long userId, Long restaurantId, BigDecimal totalPrice, LocalDate date, OrderState orderState) {
         super();
-        this.id = id;
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.totalPrice = totalPrice;
@@ -89,4 +107,24 @@ public class Order {
                 + ", totalPrice=" + totalPrice 
                 + ", orderState=" + orderState + "]";
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(createdAt, id, orderState, restaurantId, totalPrice, updatedAt, userAddressId, userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		return Objects.equals(createdAt, other.createdAt) && Objects.equals(id, other.id)
+				&& orderState == other.orderState && Objects.equals(restaurantId, other.restaurantId)
+				&& Objects.equals(totalPrice, other.totalPrice) && Objects.equals(updatedAt, other.updatedAt)
+				&& Objects.equals(userAddressId, other.userAddressId) && Objects.equals(userId, other.userId);
+	}
 }

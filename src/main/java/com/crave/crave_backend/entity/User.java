@@ -1,5 +1,9 @@
 package com.crave.crave_backend.entity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +37,21 @@ public class User {
 	@Column(nullable = false)
 	private String passwordHash;
 	
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
 	public Long getId() {
         return id;
     }
@@ -79,10 +98,9 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public User(Long id, String firstName, String middleName, String lastName,
+    public User(String firstName, String middleName, String lastName,
                 String contactNumber, String email, String passwordHash) {
         super();
-        this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -103,4 +121,26 @@ public class User {
                 + ", email=" + email 
                 + ", passwordHash=" + passwordHash + "]";
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(contactNumber, createdAt, email, firstName, id, lastName, middleName, passwordHash,
+				updatedAt);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(contactNumber, other.contactNumber) && Objects.equals(createdAt, other.createdAt)
+				&& Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(middleName, other.middleName) && Objects.equals(passwordHash, other.passwordHash)
+				&& Objects.equals(updatedAt, other.updatedAt);
+	}
 }

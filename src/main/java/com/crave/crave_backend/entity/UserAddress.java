@@ -1,5 +1,9 @@
 package com.crave.crave_backend.entity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +34,21 @@ public class UserAddress {
 	
 	@Column(nullable = false)
 	private String countryName;
+	
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 	
 	public Long getId() {
         return id;
@@ -77,10 +96,9 @@ public class UserAddress {
         this.countryName = countryName;
     }
 
-    public UserAddress(Long id, Long userId, Long buildingNumber, String cityName,
+    public UserAddress(Long userId, Long buildingNumber, String cityName,
                        String pinCode, String stateName, String countryName) {
         super();
-        this.id = id;
         this.userId = userId;
         this.buildingNumber = buildingNumber;
         this.cityName = cityName;
@@ -101,4 +119,26 @@ public class UserAddress {
                 + ", stateName=" + stateName 
                 + ", countryName=" + countryName + "]";
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(buildingNumber, cityName, countryName, createdAt, id, pinCode, stateName, updatedAt,
+				userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserAddress other = (UserAddress) obj;
+		return Objects.equals(buildingNumber, other.buildingNumber) && Objects.equals(cityName, other.cityName)
+				&& Objects.equals(countryName, other.countryName) && Objects.equals(createdAt, other.createdAt)
+				&& Objects.equals(id, other.id) && Objects.equals(pinCode, other.pinCode)
+				&& Objects.equals(stateName, other.stateName) && Objects.equals(updatedAt, other.updatedAt)
+				&& Objects.equals(userId, other.userId);
+	}
 }

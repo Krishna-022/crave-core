@@ -1,6 +1,12 @@
 package com.crave.crave_backend.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +30,21 @@ public class MenuItem {
 	@Column(nullable = false)
 	@Digits(integer=6, fraction=2)
 	private BigDecimal price;
+	
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 	
 	public Long getId() {
         return id;
@@ -53,9 +74,8 @@ public class MenuItem {
         this.price = price;
     }
 
-    public MenuItem(Long id, Long menuCategoryId, String name, BigDecimal price) {
+    public MenuItem(Long menuCategoryId, String name, BigDecimal price) {
         super();
-        this.id = id;
         this.menuCategoryId = menuCategoryId;
         this.name = name;
         this.price = price;
@@ -70,4 +90,23 @@ public class MenuItem {
                 + ", name=" + name 
                 + ", price=" + price + "]";
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(createdAt, id, menuCategoryId, name, price, updatedAt);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MenuItem other = (MenuItem) obj;
+		return Objects.equals(createdAt, other.createdAt) && Objects.equals(id, other.id)
+				&& Objects.equals(menuCategoryId, other.menuCategoryId) && Objects.equals(name, other.name)
+				&& Objects.equals(price, other.price) && Objects.equals(updatedAt, other.updatedAt);
+	}
 }
