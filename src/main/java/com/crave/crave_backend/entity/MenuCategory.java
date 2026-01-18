@@ -1,5 +1,11 @@
 package com.crave.crave_backend.entity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +24,21 @@ public class MenuCategory {
 	
 	@Column(nullable = false)
 	private String name;
+	
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
 	public Long getId() {
 		return id;
@@ -37,9 +58,8 @@ public class MenuCategory {
 		this.name = name;
 	}
 
-	public MenuCategory(Long id, Long restaurantId, String name) {
+	public MenuCategory(Long restaurantId, String name) {
 		super();
-		this.id = id;
 		this.restaurantId = restaurantId;
 		this.name = name;
 	}
@@ -49,5 +69,24 @@ public class MenuCategory {
 	@Override
 	public String toString() {
 		return "MenuCategory [id=" + id + ", restaurantId=" + restaurantId + ", name=" + name + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(createdAt, id, name, restaurantId, updatedAt);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MenuCategory other = (MenuCategory) obj;
+		return Objects.equals(createdAt, other.createdAt) && Objects.equals(id, other.id)
+				&& Objects.equals(name, other.name) && Objects.equals(restaurantId, other.restaurantId)
+				&& Objects.equals(updatedAt, other.updatedAt);
 	}
 }

@@ -1,5 +1,10 @@
 package com.crave.crave_backend.entity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +23,21 @@ public class Cart {
 
 	@Column(nullable = false)
 	private Long restaurantId;
+	
+	@CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+    private LocalDateTime updatedAt;
+    
+    public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
 	public Long getId() {
 		return id;
@@ -39,9 +59,8 @@ public class Cart {
 
 	public Cart() {}
 
-	public Cart(Long id, Long userId, Long restaurantId) {
+	public Cart(Long userId, Long restaurantId) {
 		super();
-		this.id = id;
 		this.userId = userId;
 		this.restaurantId = restaurantId;
 	}
@@ -49,5 +68,24 @@ public class Cart {
 	@Override
 	public String toString() {
 		return "Cart [id=" + id + ", userId=" + userId + ", restaurantId=" + restaurantId + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(createdAt, id, restaurantId, updatedAt, userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cart other = (Cart) obj;
+		return Objects.equals(createdAt, other.createdAt) && Objects.equals(id, other.id)
+				&& Objects.equals(restaurantId, other.restaurantId) && Objects.equals(updatedAt, other.updatedAt)
+				&& Objects.equals(userId, other.userId);
 	}
 }
