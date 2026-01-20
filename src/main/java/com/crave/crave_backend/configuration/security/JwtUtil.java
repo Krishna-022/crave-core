@@ -3,11 +3,8 @@ package com.crave.crave_backend.configuration.security;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.crypto.SecretKey;
-
 import org.springframework.stereotype.Component;
-
 import com.crave.crave_backend.constant.SecurityConstants;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 

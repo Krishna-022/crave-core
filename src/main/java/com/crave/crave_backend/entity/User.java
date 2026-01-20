@@ -4,37 +4,53 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.crave.crave_backend.constant.DatabaseConstraintNames;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "users")
+@Table(
+	    name = "users",
+	    uniqueConstraints = {
+	        @UniqueConstraint(
+	            name = DatabaseConstraintNames.UNIQUE_CONTACT_NUMBER,
+	            columnNames = "contact_number"
+	        ),
+	        @UniqueConstraint(
+	            name = DatabaseConstraintNames.UNIQUE_EMAIL,
+	            columnNames = "email"
+	        )
+	    }
+	)
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50)
 	private String firstName; 
 	
-	@Column(nullable = true)
+	@Column(nullable = true, length = 50)
 	private String middleName;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50)
 	private String lastName;
 	
-	@Column(nullable = false, unique = true, length = 10)
+	@Column(nullable = false, length = 10)
 	private String contactNumber;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 64)
 	private String passwordHash;
 	
 	@CreationTimestamp
@@ -91,10 +107,10 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+    public String getPasswordHash() {
         return passwordHash;
     }
-    public void setPassword(String passwordHash) {
+    public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
 
