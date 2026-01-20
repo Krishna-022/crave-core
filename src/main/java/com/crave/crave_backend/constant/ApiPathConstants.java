@@ -1,7 +1,7 @@
 package com.crave.crave_backend.constant;
 
 public final class ApiPathConstants {
-	
+
 	private ApiPathConstants() {}
 	
 	public static final class User {
