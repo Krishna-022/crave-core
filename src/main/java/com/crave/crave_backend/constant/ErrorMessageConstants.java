@@ -5,4 +5,5 @@ public interface ErrorMessageConstants {
 	String EMAIL_ALREADY_EXIST = "%s with email %s already exists";
 	String PERSISTENCE_UNKNOWN_EXCEPTION = "Server busy, Please try again";
 	String DATA_INTEGRITY_VIOLATION = "Please fill all the fields properly";
+	String BAD_CREDENTIALS = "Invalid credentials";
 }
