@@ -27,8 +27,7 @@ public class UserController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public MessageOutDto registerUser(@Valid @RequestBody RegisterUserInDto registerUserInDto) {
-		userValidation.validateUserContactNumber(registerUserInDto.getContactNumber());
-		userValidation.validateUserEmail(registerUserInDto.getEmail());
+		userValidation.validateRegistrationContactNumberAndEmail(registerUserInDto.getContactNumber(), registerUserInDto.getEmail());
 		return userService.registerUser(registerUserInDto);
 	}
 }

@@ -50,7 +50,7 @@ public class User {
 	@Column(nullable = false)
 	private String email;
 	
-	@Column(nullable = false, length = 64)
+	@Column(nullable = false)
 	private String passwordHash;
 	
 	@CreationTimestamp

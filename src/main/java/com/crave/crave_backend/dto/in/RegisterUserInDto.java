@@ -9,7 +9,7 @@ public class RegisterUserInDto {
 	@NotBlank(message = "First name is required")
 	@Pattern(
 			  regexp = "^[A-Za-z]{2,50}$",
-			  message = "First name must be 2 to 50 English letters only"
+			  message = "First name must be 2 to 50 English alphabets only"
 			)
 	private String firstName;
 	
@@ -89,5 +89,10 @@ public class RegisterUserInDto {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "RegisterUserInDto [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
+				+ ", contactNumber=" + contactNumber + ", email=" + email + ", password=" + password + "]";
 	}
 }

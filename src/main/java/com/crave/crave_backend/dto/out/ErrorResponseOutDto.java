@@ -31,4 +31,9 @@ public class ErrorResponseOutDto {
 	public void setMessage(List<String> message) {
 		this.message = message;
 	}
+
+	@Override
+	public String toString() {
+		return "ErrorResponseOutDto [message=" + message + ", timestamp=" + timestamp + "]";
+	}
 }
