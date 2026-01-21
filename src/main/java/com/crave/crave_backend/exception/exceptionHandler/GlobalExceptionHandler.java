@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.crave.crave_backend.dto.out.ErrorResponseOutDto;
 import com.crave.crave_backend.exception.EntityConflictException;
 
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	

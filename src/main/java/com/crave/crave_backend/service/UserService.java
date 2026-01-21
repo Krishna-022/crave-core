@@ -2,7 +2,6 @@ package com.crave.crave_backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +23,7 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	public MessageOutDto registerUser(RegisterUserInDto registerUserInDto) {
 		User user = new User();
 		user.setContactNumber(registerUserInDto.getContactNumber());
