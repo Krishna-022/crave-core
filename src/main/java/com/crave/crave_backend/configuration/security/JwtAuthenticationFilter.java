@@ -8,6 +8,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import com.crave.crave_backend.constant.SecurityConstants;
+
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,26 +21,26 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	
 	@Autowired
-	JwtUtil jwtUtil;
+	private JwtUtils jwtUtils;
 	
 	@Autowired
-	HandlerExceptionResolver handlerExceptionResolver; 
+	private HandlerExceptionResolver handlerExceptionResolver; 
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		String authHeader = request.getHeader("Authorization");
+		String authHeader = request.getHeader(SecurityConstants.AUTHORIZATION_HEADER);
 		
-		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+		if (authHeader == null || !authHeader.startsWith(SecurityConstants.BEARER_PREFIX)) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 		
-		String accessToken = authHeader.substring(7);
+		String accessToken = authHeader.substring(SecurityConstants.BEARER_PREFIX_LENGTH);
 		
 		try {
-			String userId = jwtUtil.verifyAccessToken(accessToken);
+			String userId = jwtUtils.verifyAccessToken(accessToken);
 			
 			Authentication authentication = 
 					new UsernamePasswordAuthenticationToken(userId, null, null);

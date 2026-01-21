@@ -1,6 +1,17 @@
 package com.crave.crave_backend.constant;
 
+import java.util.concurrent.TimeUnit;
+
 public interface SecurityConstants {
+	
 	String APPLICATION_NAME = "Crave";
-	String SECRET_KEY = "kX9pL2mN7qR4tV8wY1zA5bC3dF6gH0jJ3mP8rT2uE5iO9nQ1sW4xZ6";
+	
+	String AUTHORIZATION_HEADER = "Authorization";
+	
+	String BEARER_PREFIX = "Bearer ";
+	
+	Integer BEARER_PREFIX_LENGTH = 7;
+	
+	Long ONE_HOUR_MS = TimeUnit.HOURS.toMillis(1);
+	
 }
