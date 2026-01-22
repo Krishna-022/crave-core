@@ -17,8 +17,10 @@ public class MessageOutDto {
 		this.message = message;
 	}
 
-	public MessageOutDto() {
-		super();
-		// TODO Auto-generated constructor stub
+	public MessageOutDto() {}
+
+	@Override
+	public String toString() {
+		return "MessageOutDto [message=" + message + "]";
 	}
 }

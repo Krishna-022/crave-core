@@ -2,7 +2,9 @@ package com.crave.crave_backend.exception.exceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.dao.DataIntegrityViolationException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,31 +13,29 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.crave.crave_backend.dto.out.ErrorResponseOutDto;
-import com.crave.crave_backend.exception.ContactNumberAlreadyExistsException;
-import com.crave.crave_backend.exception.EmailAlreadyExistsException;
-import com.crave.crave_backend.exception.PersistenceUnknownException;
+import com.crave.crave_backend.exception.EntityConflictException;
+
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	
-	@ExceptionHandler({EmailAlreadyExistsException.class, ContactNumberAlreadyExistsException.class})
-	public ResponseEntity<ErrorResponseOutDto> handleContactNumberAlreadyExistsException(Exception ex) {		
-		return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponseOutDto(List.of(ex.getMessage())));
-	}
+	private Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 	
-	@ExceptionHandler({DataIntegrityViolationException.class, PersistenceUnknownException.class})
-	public ResponseEntity<ErrorResponseOutDto> handleDataIntegrityViolationException(Exception ex) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseOutDto(List.of(ex.getMessage())));
+	@ExceptionHandler(EntityConflictException.class)
+	public ResponseEntity<ErrorResponseOutDto> handleEntityConflictException(EntityConflictException entityConflictException) {
+		log.warn("event={} reason=conflicting fields {}", entityConflictException.getLogMessage(), entityConflictException.getConflictingFieldsList());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponseOutDto(entityConflictException.getMessageList()));
 	}
 	
 	@ExceptionHandler(BadCredentialsException.class)
-	public ResponseEntity<ErrorResponseOutDto> handleBadCredentialsException(Exception ex) {
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseOutDto(List.of(ex.getMessage())));
+	public ResponseEntity<ErrorResponseOutDto> handleBadCredentialsException(BadCredentialsException badCredentialsException) {
+		log.warn("event=User login failed reason=Bad credentials");
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseOutDto(List.of(badCredentialsException.getMessage())));
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ErrorResponseOutDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-		List<FieldError> allErrors = ex.getFieldErrors();
+	public ResponseEntity<ErrorResponseOutDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException) {
+		List<FieldError> allErrors = methodArgumentNotValidException.getFieldErrors();
 		List<String> messageList = new ArrayList<>();
 		
 		for (int i = 0; i < allErrors.size(); i++) {
@@ -43,7 +43,6 @@ public class GlobalExceptionHandler {
 			String message = err.getField() + ": " + err.getDefaultMessage();
 			messageList.add(message);
 		}
-		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponseOutDto(messageList));
 	}
 }

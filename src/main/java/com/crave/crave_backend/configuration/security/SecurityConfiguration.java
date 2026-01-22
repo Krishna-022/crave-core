@@ -15,6 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.crave.crave_backend.constant.ApiPathConstants;
+import com.crave.crave_backend.logging.RequestCorrelationFilter;
+
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
@@ -22,6 +25,9 @@ public class SecurityConfiguration {
 	
 	@Autowired
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
+	
+	@Autowired
+	private RequestCorrelationFilter requestCorrelationFilter;
 	
 	@Bean
 	public SecurityFilterChain customSecurityFilterChain(HttpSecurity httpSecurity) {
@@ -33,12 +39,13 @@ public class SecurityConfiguration {
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
 		httpSecurity.authorizeHttpRequests(auth -> auth
-				.requestMatchers(HttpMethod.POST, "/user").permitAll()
-				.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+				.requestMatchers(HttpMethod.POST, ApiPathConstants.PublicApiRoutes.REGISTER_USER).permitAll()
+				.requestMatchers(HttpMethod.POST, ApiPathConstants.PublicApiRoutes.USER_LOGIN).permitAll()
 				.anyRequest().authenticated());
 		
-		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-				
+		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+					.addFilterBefore(requestCorrelationFilter, JwtAuthenticationFilter.class);
+		
 		return httpSecurity.build();
 	}
 	

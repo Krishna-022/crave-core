@@ -1,5 +1,7 @@
 package com.crave.crave_backend.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +13,6 @@ import com.crave.crave_backend.constant.ApiPathConstants;
 import com.crave.crave_backend.dto.in.UserLoginInDto;
 import com.crave.crave_backend.dto.out.UserLogInOutDto;
 import com.crave.crave_backend.service.AuthService;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -21,9 +22,12 @@ public class AuthController {
 	@Autowired
 	private AuthService authService;
 	
+	private Logger log = LoggerFactory.getLogger(AuthController.class);
+	
 	@PostMapping(ApiPathConstants.Auth.LOG_IN)
 	@ResponseStatus(HttpStatus.OK)
 	public UserLogInOutDto userLogin(@Valid @RequestBody UserLoginInDto userLoginInDto) {
+		log.info("event=Recieved user login request");
 		return authService.authenticate(userLoginInDto);
 	}
 }

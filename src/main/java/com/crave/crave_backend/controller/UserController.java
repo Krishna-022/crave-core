@@ -1,5 +1,7 @@
 package com.crave.crave_backend.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,11 +26,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	private Logger log = LoggerFactory.getLogger(UserController.class);
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public MessageOutDto registerUser(@Valid @RequestBody RegisterUserInDto registerUserInDto) {
-		userValidation.validateUserContactNumber(registerUserInDto.getContactNumber());
-		userValidation.validateUserEmail(registerUserInDto.getEmail());
+		log.info("event=User registration request recieved");
+		userValidation.validateRegistrationContactNumberAndEmail(registerUserInDto.getContactNumber(), registerUserInDto.getEmail());
 		return userService.registerUser(registerUserInDto);
 	}
 }
