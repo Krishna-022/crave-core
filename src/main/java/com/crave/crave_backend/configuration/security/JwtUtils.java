@@ -3,12 +3,9 @@ package com.crave.crave_backend.configuration.security;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.crypto.SecretKey;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.crave.crave_backend.constant.SecurityConstants;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -27,7 +24,7 @@ public class JwtUtils {
 		String accessToken = Jwts.builder()
 				.subject(userId.toString())
 				.issuedAt(new Date())
-				.expiration(new Date(System.currentTimeMillis() + SecurityConstants.ONE_HOUR_MS))
+				.expiration(new Date(System.currentTimeMillis() + SecurityConstants.ONE_HOUR_IN_MILLISECONDS))
 				.issuer(SecurityConstants.APPLICATION_NAME)
 				.signWith(getSecretKey())
 				.compact();

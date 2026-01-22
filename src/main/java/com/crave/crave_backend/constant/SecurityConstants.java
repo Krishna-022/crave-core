@@ -12,6 +12,6 @@ public interface SecurityConstants {
 	
 	Integer BEARER_PREFIX_LENGTH = 7;
 	
-	Long ONE_HOUR_MS = TimeUnit.HOURS.toMillis(1);
+	Long ONE_HOUR_IN_MILLISECONDS = TimeUnit.HOURS.toMillis(1);
 	
 }
