@@ -1,6 +1,6 @@
 package com.crave.crave_backend.dto.out;
 
-public class UserLogInOutDto {
+public class LogInOutDto {
 	
 	private String accessToken;
 
@@ -11,7 +11,7 @@ public class UserLogInOutDto {
 		this.accessToken = accessToken;
 	}
 
-	public UserLogInOutDto(String accessToken) {
+	public LogInOutDto(String accessToken) {
 		this.accessToken = accessToken;
 	}
 }

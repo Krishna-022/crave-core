@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.crave.crave_backend.constant.ApiPathConstants;
-import com.crave.crave_backend.dto.in.UserLoginInDto;
-import com.crave.crave_backend.dto.out.UserLogInOutDto;
+import com.crave.crave_backend.dto.in.LoginInDto;
+import com.crave.crave_backend.dto.out.LogInOutDto;
 import com.crave.crave_backend.service.AuthService;
 import jakarta.validation.Valid;
 
@@ -26,8 +26,8 @@ public class AuthController {
 	
 	@PostMapping(ApiPathConstants.Auth.LOG_IN)
 	@ResponseStatus(HttpStatus.OK)
-	public UserLogInOutDto userLogin(@Valid @RequestBody UserLoginInDto userLoginInDto) {
+	public LogInOutDto userLogin(@Valid @RequestBody LoginInDto loginInDto) {
 		log.info("event=Recieved user login request");
-		return authService.authenticate(userLoginInDto);
+		return authService.authenticate(loginInDto);
 	}
 }

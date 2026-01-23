@@ -3,7 +3,7 @@ package com.crave.crave_backend.dto.in;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public class UserLoginInDto {
+public class LoginInDto {
 	@NotBlank(message = "Contact number is required")
 	@Pattern(
 	    regexp = "^[6-9]\\d{9}$",

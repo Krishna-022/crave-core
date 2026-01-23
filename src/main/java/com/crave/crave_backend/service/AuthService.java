@@ -9,8 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.crave.crave_backend.configuration.security.JwtUtils;
 import com.crave.crave_backend.constant.ErrorMessageConstants;
-import com.crave.crave_backend.dto.in.UserLoginInDto;
-import com.crave.crave_backend.dto.out.UserLogInOutDto;
+import com.crave.crave_backend.dto.in.LoginInDto;
+import com.crave.crave_backend.dto.out.LogInOutDto;
 import com.crave.crave_backend.entity.User;
 import com.crave.crave_backend.repository.UserRepository;
 
@@ -30,9 +30,9 @@ public class AuthService {
 	
 	
 	//Intentionally designed to mitigate timing attacks 
-	public UserLogInOutDto authenticate(UserLoginInDto userLoginInDto) {
-		Optional<User> userOptional = userRepository.findByContactNumber(userLoginInDto.getContactNumber());
-		String givenPassword = userLoginInDto.getPassword();
+	public LogInOutDto authenticate(LoginInDto loginInDto) {
+		Optional<User> userOptional = userRepository.findByContactNumber(loginInDto.getContactNumber());
+		String givenPassword = loginInDto.getPassword();
 		String userPassword = "dummyHash";
 		User user = new User();
 		
@@ -47,6 +47,6 @@ public class AuthService {
 		String accessToken = jwtUtils.getAccessToken(user.getId());
 		
 		log.info("event=User login successful UserId={}", user.getId());
-		return new UserLogInOutDto(accessToken);
+		return new LogInOutDto(accessToken);
 	}
 }
