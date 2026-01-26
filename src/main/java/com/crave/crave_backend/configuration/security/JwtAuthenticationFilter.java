@@ -8,9 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-
 import com.crave.crave_backend.constant.SecurityConstants;
-
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	
 	@Autowired
 	private JwtUtils jwtUtils;
@@ -36,7 +34,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			filterChain.doFilter(request, response);
 			return;
 		}
-		
 		String accessToken = authHeader.substring(SecurityConstants.BEARER_PREFIX_LENGTH);
 		
 		try {

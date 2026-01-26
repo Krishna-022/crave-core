@@ -14,4 +14,6 @@ public interface SecurityConstants {
 	
 	Long ONE_HOUR_IN_MILLISECONDS = TimeUnit.HOURS.toMillis(1);
 	
+	String REQUEST_ID = "requestId";
+	
 }
