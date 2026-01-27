@@ -18,7 +18,7 @@ public class JwtUtils {
 	private SecretKey getSecretKey() {
 		return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 	}
-	
+
 	public String getAccessToken(Long userId) {
 		
 		String accessToken = Jwts.builder()

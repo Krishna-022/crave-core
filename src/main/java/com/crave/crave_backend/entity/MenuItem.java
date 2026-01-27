@@ -16,80 +16,79 @@ import jakarta.validation.constraints.Digits;
 
 @Entity
 public class MenuItem {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Long menuCategoryId;
-	
+
 	@Column(nullable = false)
 	private String name;
-	
+
 	@Column(nullable = false)
-	@Digits(integer=6, fraction=2)
+	@Digits(integer = 6, fraction = 2)
 	private BigDecimal price;
-	
+
 	@CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-	
+	@Column(updatable = false)
+	private LocalDateTime createdAt;
+
 	@UpdateTimestamp
-    private LocalDateTime updatedAt;
-    
-    public LocalDateTime getCreatedAt() {
+	private LocalDateTime updatedAt;
+
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public Long getMenuCategoryId() {
-        return menuCategoryId;
-    }
+	public Long getMenuCategoryId() {
+		return menuCategoryId;
+	}
 
-    public void setMenuCategoryId(Long menuCategoryId) {
-        this.menuCategoryId = menuCategoryId;
-    }
+	public void setMenuCategoryId(Long menuCategoryId) {
+		this.menuCategoryId = menuCategoryId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public BigDecimal getPrice() {
-        return price;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+	public BigDecimal getPrice() {
+		return price;
+	}
 
-    public MenuItem(Long menuCategoryId, String name, BigDecimal price) {
-        super();
-        this.menuCategoryId = menuCategoryId;
-        this.name = name;
-        this.price = price;
-    }
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 
-    public MenuItem() {}
+	public MenuItem(Long menuCategoryId, String name, BigDecimal price) {
+		super();
+		this.menuCategoryId = menuCategoryId;
+		this.name = name;
+		this.price = price;
+	}
 
-    @Override
-    public String toString() {
-        return "MenuItem [id=" + id 
-                + ", menuCategoryId=" + menuCategoryId 
-                + ", name=" + name 
-                + ", price=" + price + "]";
-    }
+	public MenuItem() {
+	}
+
+	@Override
+	public String toString() {
+		return "MenuItem [id=" + id + ", menuCategoryId=" + menuCategoryId + ", name=" + name + ", price=" + price
+				+ "]";
+	}
 
 	@Override
 	public int hashCode() {

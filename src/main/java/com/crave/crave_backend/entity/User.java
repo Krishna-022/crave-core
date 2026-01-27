@@ -16,51 +16,41 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(
-	    name = "users",
-	    uniqueConstraints = {
-	        @UniqueConstraint(
-	            name = DatabaseConstraintNames.UNIQUE_CONTACT_NUMBER,
-	            columnNames = "contact_number"
-	        ),
-	        @UniqueConstraint(
-	            name = DatabaseConstraintNames.UNIQUE_EMAIL,
-	            columnNames = "email"
-	        )
-	    }
-	)
+@Table(name = "users", uniqueConstraints = {
+		@UniqueConstraint(name = DatabaseConstraintNames.UNIQUE_CONTACT_NUMBER, columnNames = "contact_number"),
+		@UniqueConstraint(name = DatabaseConstraintNames.UNIQUE_EMAIL, columnNames = "email") })
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 50)
-	private String firstName; 
-	
+	private String firstName;
+
 	@Column(nullable = true, length = 50)
 	private String middleName;
-	
+
 	@Column(nullable = false, length = 50)
 	private String lastName;
-	
+
 	@Column(nullable = false, length = 10)
 	private String contactNumber;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
+
 	@Column(nullable = false, length = 64)
 	private String passwordHash;
-	
+
 	@CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-	
+	@Column(updatable = false)
+	private LocalDateTime createdAt;
+
 	@UpdateTimestamp
-    private LocalDateTime updatedAt;
-    
-    public LocalDateTime getCreatedAt() {
+	private LocalDateTime updatedAt;
+
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
@@ -69,74 +59,76 @@ public class User {
 	}
 
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getMiddleName() {
-        return middleName;
-    }
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getMiddleName() {
+		return middleName;
+	}
 
-    public String getContactNumber() {
-        return contactNumber;
-    }
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
 
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public User(String firstName, String middleName, String lastName,
-                String contactNumber, String email, String passwordHash) {
-        super();
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.contactNumber = contactNumber;
-        this.email = email;
-        this.passwordHash = passwordHash;
-    }
+	public String getContactNumber() {
+		return contactNumber;
+	}
 
-    public User() {}
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
 
-    @Override
-    public String toString() {
-        return "User [id=" + id 
-                + ", firstName=" + firstName 
-                + ", middleName=" + middleName 
-                + ", lastName=" + lastName 
-                + ", contactNumber=" + contactNumber 
-                + ", email=" + email 
-                + ", passwordHash=" + passwordHash + "]";
-    }
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public User(String firstName, String middleName, String lastName, String contactNumber, String email,
+			String passwordHash) {
+		super();
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.contactNumber = contactNumber;
+		this.email = email;
+		this.passwordHash = passwordHash;
+	}
+
+	public User() {
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
+				+ ", contactNumber=" + contactNumber + ", email=" + email + ", passwordHash=" + passwordHash + "]";
+	}
 
 	@Override
 	public int hashCode() {

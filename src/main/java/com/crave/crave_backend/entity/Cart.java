@@ -13,25 +13,25 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Cart {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Long userId;
 
 	@Column(nullable = false)
 	private Long restaurantId;
-	
+
 	@CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-	
+	@Column(updatable = false)
+	private LocalDateTime createdAt;
+
 	@UpdateTimestamp
-    private LocalDateTime updatedAt;
-    
-    public LocalDateTime getCreatedAt() {
+	private LocalDateTime updatedAt;
+
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
@@ -46,6 +46,7 @@ public class Cart {
 	public Long getUserId() {
 		return userId;
 	}
+
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
@@ -53,11 +54,13 @@ public class Cart {
 	public Long getRestaurantId() {
 		return restaurantId;
 	}
+
 	public void setRestaurantId(Long restaurantId) {
 		this.restaurantId = restaurantId;
 	}
 
-	public Cart() {}
+	public Cart() {
+	}
 
 	public Cart(Long userId, Long restaurantId) {
 		super();

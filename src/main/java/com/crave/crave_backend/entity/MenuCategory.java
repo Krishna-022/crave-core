@@ -14,25 +14,25 @@ import jakarta.persistence.Id;
 
 @Entity
 public class MenuCategory {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Long restaurantId;
-	
+
 	@Column(nullable = false)
 	private String name;
-	
+
 	@CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-	
+	@Column(updatable = false)
+	private LocalDateTime createdAt;
+
 	@UpdateTimestamp
-    private LocalDateTime updatedAt;
-    
-    public LocalDateTime getCreatedAt() {
+	private LocalDateTime updatedAt;
+
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
@@ -47,6 +47,7 @@ public class MenuCategory {
 	public Long getRestaurantId() {
 		return restaurantId;
 	}
+
 	public void setRestaurantId(Long restaurantId) {
 		this.restaurantId = restaurantId;
 	}
@@ -54,6 +55,7 @@ public class MenuCategory {
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -64,7 +66,8 @@ public class MenuCategory {
 		this.name = name;
 	}
 
-	public MenuCategory() {}
+	public MenuCategory() {
+	}
 
 	@Override
 	public String toString() {

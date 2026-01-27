@@ -1,18 +1,25 @@
 package com.crave.crave_backend.exception;
 
-public class PersistenceUnknownException extends RuntimeException{
+public class UserUnauthorizedException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String message;
 
-	public PersistenceUnknownException() {
-		super();
+	private Long userId;
+
+	public Long getUserId() {
+		return userId;
 	}
-	
-	public PersistenceUnknownException(String message) {
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public UserUnauthorizedException(String message, Long userId) {
 		super(message);
 		this.message = message;
+		this.userId = userId;
 	}
 
 	public String getMessage() {

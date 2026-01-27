@@ -13,28 +13,28 @@ import jakarta.persistence.Id;
 
 @Entity
 public class CartItem {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Long cartId;
-	
+
 	@Column(nullable = false)
 	private Long menuItemId;
-	
+
 	@Column(nullable = false)
 	private Integer quantity;
-	
+
 	@CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-	
+	@Column(updatable = false)
+	private LocalDateTime createdAt;
+
 	@UpdateTimestamp
-    private LocalDateTime updatedAt;
-    
-    public LocalDateTime getCreatedAt() {
+	private LocalDateTime updatedAt;
+
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
@@ -49,6 +49,7 @@ public class CartItem {
 	public Long getCartId() {
 		return cartId;
 	}
+
 	public void setCartId(Long cartId) {
 		this.cartId = cartId;
 	}
@@ -56,6 +57,7 @@ public class CartItem {
 	public Long getMenuItemId() {
 		return menuItemId;
 	}
+
 	public void setMenuItemId(Long menuItemId) {
 		this.menuItemId = menuItemId;
 	}
@@ -63,6 +65,7 @@ public class CartItem {
 	public Integer getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
@@ -74,7 +77,8 @@ public class CartItem {
 		this.quantity = quantity;
 	}
 
-	public CartItem() {}
+	public CartItem() {
+	}
 
 	@Override
 	public String toString() {

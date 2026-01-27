@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.crave.crave_backend.constant.ApiPathConstants;
+import com.crave.crave_backend.constant.SuccessMessageConstants;
 import com.crave.crave_backend.dto.in.RegisterUserInDto;
 import com.crave.crave_backend.dto.out.MessageOutDto;
 import com.crave.crave_backend.service.UserService;
@@ -19,20 +20,22 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(ApiPathConstants.User.BASE)
 public class UserController {
-	
+
 	@Autowired
 	private UserValidation userValidation;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	private Logger log = LoggerFactory.getLogger(UserController.class);
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public MessageOutDto registerUser(@Valid @RequestBody RegisterUserInDto registerUserInDto) {
-		log.info("event=User registration request recieved");
+		log.info("event=User registration request received");
 		userValidation.validateRegistrationContactNumberAndEmail(registerUserInDto.getContactNumber(), registerUserInDto.getEmail());
-		return userService.registerUser(registerUserInDto);
+		Long userId = userService.registerUser(registerUserInDto);
+		log.info("event=Registration successful, userId={}", userId);
+		return new MessageOutDto(SuccessMessageConstants.REGISTRATION_SUCCESSFUL);
 	}
 }

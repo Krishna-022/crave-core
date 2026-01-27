@@ -2,35 +2,28 @@ package com.crave.crave_backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.crave.crave_backend.constant.EntityConflictLogConstants;
 import com.crave.crave_backend.constant.DatabaseConstraintNames;
 import com.crave.crave_backend.constant.ErrorMessageConstants;
-import com.crave.crave_backend.constant.SuccessMessageConstants;
 import com.crave.crave_backend.dto.in.RegisterUserInDto;
-import com.crave.crave_backend.dto.out.MessageOutDto;
 import com.crave.crave_backend.entity.User;
 import com.crave.crave_backend.exception.EntityConflictException;
 import com.crave.crave_backend.repository.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	private Logger log = LoggerFactory.getLogger(UserService.class);
 
-	public MessageOutDto registerUser(RegisterUserInDto registerUserInDto) {
+	public Long registerUser(RegisterUserInDto registerUserInDto) {
 		User user = new User();
 		user.setContactNumber(registerUserInDto.getContactNumber());
 		user.setEmail(registerUserInDto.getEmail());
@@ -39,27 +32,28 @@ public class UserService {
 		user.setMiddleName(registerUserInDto.getMiddleName());
 		user.setPasswordHash(passwordEncoder.encode(registerUserInDto.getPassword()));
 		Long userId;
+
 		try {
 			userId = userRepository.save(user).getId();
-		}
-		catch (DataIntegrityViolationException ex){
+		} catch (DataIntegrityViolationException ex) {
 			String info = ex.getMostSpecificCause().toString().toLowerCase();
 			String entity = user.getClass().getSimpleName();
 			List<String> messageList = new ArrayList<>();
 			List<String> conflictingFieldsList = new ArrayList<String>();
-			
+
 			if (info.contains(DatabaseConstraintNames.UNIQUE_CONTACT_NUMBER)) {
-				messageList.add(String.format(ErrorMessageConstants.ENTITY_CONFLICT, entity, EntityConflictLogConstants.CONTACT_NUMBER, user.getContactNumber()));
+				messageList.add(String.format(ErrorMessageConstants.ENTITY_CONFLICT, entity,
+						EntityConflictLogConstants.CONTACT_NUMBER, user.getContactNumber()));
 				conflictingFieldsList.add(EntityConflictLogConstants.CONTACT_NUMBER);
 			} else if (info.contains(DatabaseConstraintNames.UNIQUE_EMAIL)) {
-				messageList.add(String.format(ErrorMessageConstants.ENTITY_CONFLICT, entity, EntityConflictLogConstants.EMAIL, user.getEmail()));
-				conflictingFieldsList.add(EntityConflictLogConstants.CONTACT_NUMBER);
+				messageList.add(String.format(ErrorMessageConstants.ENTITY_CONFLICT, entity,
+						EntityConflictLogConstants.EMAIL, user.getEmail()));
+				conflictingFieldsList.add(EntityConflictLogConstants.EMAIL);
 			} else {
 				messageList.add(ErrorMessageConstants.DATA_INTEGRITY_VIOLATION);
 			}
 			throw new EntityConflictException(messageList, conflictingFieldsList, EntityConflictLogConstants.USER);
 		}
-		log.info("event=Registration successful, userId={}", userId);
-		return new MessageOutDto(SuccessMessageConstants.REGISTRATION_SUCCESSFUL);
+		return userId;
 	}
 }

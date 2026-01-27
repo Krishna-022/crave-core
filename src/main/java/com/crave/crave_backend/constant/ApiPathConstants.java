@@ -16,6 +16,14 @@ public final class ApiPathConstants {
 		public static final String LOG_IN = "/login";	
 	}
 	
+	public static final class Restaurant {
+		
+		public static final String BASE = "/restaurant";
+		
+		public static final String LIST = "/list";
+		
+	}
+	
 	public static final class PublicApiRoutes {
 		
 		public static final String REGISTER_USER = User.BASE;

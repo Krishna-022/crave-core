@@ -4,9 +4,21 @@ public interface ErrorMessageConstants {
 	
 	String ENTITY_CONFLICT = "%s with %s '%s' already exists";
 
-	String PERSISTENCE_UNKNOWN_EXCEPTION = "Server busy, Please try again";
+	String PERSISTENCE_UNKNOWN_EXCEPTION = "Server busy, please try again";
 	
 	String DATA_INTEGRITY_VIOLATION = "Please fill all the fields properly";
 	
 	String BAD_CREDENTIALS = "Invalid credentials";
+	
+	String RESTAURANT_IMAGE_REQUIRED = "Restaurant image is required";
+	
+	String INVALID_IMAGE_TYPE = "Invalid image type";
+	
+	String LARGE_IMAGE = "Image too large";
+	
+	String IMAGE_READ_FAILED = "Failed to read image";
+	
+	String ENTITY_NOT_FOUND = "%S not found";
+	
+	String UNAUTHORIZED = "Authentication failed";
 }

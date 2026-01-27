@@ -2,10 +2,14 @@ package com.crave.crave_backend.constant;
 
 public interface EntityConflictLogConstants {
 	
-	String CONTACT_NUMBER = "Contact Number";
+	String CONTACT_NUMBER = "contact number";
 	
-	String EMAIL = "Email";
+	String EMAIL = "email";
+	
+	String NAME = "name";
 	
 	String USER = "User registration failed";
+	
+	String RESTAURANT = "Restaurant registration failed";
 
 }

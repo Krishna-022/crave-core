@@ -20,93 +20,95 @@ import jakarta.validation.constraints.Digits;
 @Entity
 @Table(name = "orders") // because order is reserved keyword in SQL
 public class Order {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Long userId;
-	
+
 	@Column(nullable = false)
 	private Long restaurantId;
-	
+
 	@Column(nullable = false)
 	private Long userAddressId;
-	
+
 	@Column(nullable = false)
-	@Digits(integer=7, fraction=2)
-	private BigDecimal totalPrice;  //Floating point (float/double) introduces rounding errors
-	
+	@Digits(integer = 7, fraction = 2)
+	private BigDecimal totalPrice; // Floating point (float/double) introduces rounding errors
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private OrderState orderState;
-	
+
 	@CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-	
+	@Column(updatable = false)
+	private LocalDateTime createdAt;
+
 	@UpdateTimestamp
-    private LocalDateTime updatedAt;
-    
-    public LocalDateTime getCreatedAt() {
+	private LocalDateTime updatedAt;
+
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public Long getUserId() {
-        return userId;
-    }
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public Long getRestaurantId() {
-        return restaurantId;
-    }
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+	public Long getRestaurantId() {
+		return restaurantId;
+	}
 
-    public OrderState getOrderState() {
-        return orderState;
-    }
-    public void setOrderState(OrderState orderState) {
-        this.orderState = orderState;
-    }
+	public void setRestaurantId(Long restaurantId) {
+		this.restaurantId = restaurantId;
+	}
 
-    public Order(Long userId, Long restaurantId, BigDecimal totalPrice, LocalDate date, OrderState orderState) {
-        super();
-        this.userId = userId;
-        this.restaurantId = restaurantId;
-        this.totalPrice = totalPrice;
-        this.orderState = orderState;
-    }
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
 
-    public Order() {}
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
-    @Override
-    public String toString() {
-        return "Order [id=" + id 
-                + ", userId=" + userId 
-                + ", restaurantId=" + restaurantId 
-                + ", totalPrice=" + totalPrice 
-                + ", orderState=" + orderState + "]";
-    }
+	public OrderState getOrderState() {
+		return orderState;
+	}
+
+	public void setOrderState(OrderState orderState) {
+		this.orderState = orderState;
+	}
+
+	public Order(Long userId, Long restaurantId, BigDecimal totalPrice, LocalDate date, OrderState orderState) {
+		super();
+		this.userId = userId;
+		this.restaurantId = restaurantId;
+		this.totalPrice = totalPrice;
+		this.orderState = orderState;
+	}
+
+	public Order() {
+	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", userId=" + userId + ", restaurantId=" + restaurantId + ", totalPrice="
+				+ totalPrice + ", orderState=" + orderState + "]";
+	}
 
 	@Override
 	public int hashCode() {
