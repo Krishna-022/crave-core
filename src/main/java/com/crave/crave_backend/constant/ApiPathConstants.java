@@ -13,7 +13,9 @@ public final class ApiPathConstants {
 		
 		public static final String BASE = "/auth";
 		
-		public static final String LOG_IN = "/login";	
+		public static final String LOG_IN = "/login";
+		
+		public static final String REFRESH = "/refresh";
 	}
 	
 	public static final class Restaurant {
@@ -29,5 +31,7 @@ public final class ApiPathConstants {
 		public static final String REGISTER_USER = User.BASE;
 		
 		public static final String USER_LOGIN = Auth.BASE + Auth.LOG_IN;
+		
+		public static final String REFRESH_TOKEN = Auth.BASE + Auth.REFRESH;
 	}
 }

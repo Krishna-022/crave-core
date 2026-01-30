@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.crave.crave_backend.constant.ApiPathConstants;
 import com.crave.crave_backend.constant.SuccessMessageConstants;
-import com.crave.crave_backend.dto.in.RegisterRestaurantIndto;
+import com.crave.crave_backend.dto.in.RegisterRestaurantInDto;
 import com.crave.crave_backend.dto.out.MessageOutDto;
 import com.crave.crave_backend.service.RestaurantService;
 import com.crave.crave_backend.validation.RestaurantValidation;
@@ -29,14 +29,14 @@ public class RestaurantController {
 	@Autowired
 	private RestaurantValidation restaurantValidation;
 
-	private Logger log = LoggerFactory.getLogger(UserController.class);
+	private Logger log = LoggerFactory.getLogger(RestaurantController.class);
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public MessageOutDto registerRestaurant(@Valid @ModelAttribute RegisterRestaurantIndto registerRestaurantIndto) {
+	public MessageOutDto registerRestaurant(@Valid @ModelAttribute RegisterRestaurantInDto registerRestaurantInDto) {
 		log.info("event=Restaurant registration request received");
-		byte[] validatedImage = restaurantValidation.validateRestaurantRegistrationDetails(registerRestaurantIndto);
-		Long restaurantId = restaurantService.registerRestaurant(registerRestaurantIndto, validatedImage);
+		byte[] validatedImage = restaurantValidation.validateRestaurantRegistrationDetails(registerRestaurantInDto);
+		Long restaurantId = restaurantService.registerRestaurant(registerRestaurantInDto, validatedImage);
 		log.info("event=Restaurant registration successful restaurantId={}", restaurantId);
 		return new MessageOutDto(SuccessMessageConstants.REGISTRATION_SUCCESSFUL);
 	}

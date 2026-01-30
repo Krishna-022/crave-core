@@ -9,7 +9,7 @@ import com.crave.crave_backend.constant.EntityConflictLogConstants;
 import com.crave.crave_backend.constant.ErrorMessageConstants;
 import com.crave.crave_backend.entity.User;
 import com.crave.crave_backend.exception.EntityConflictException;
-import com.crave.crave_backend.exception.UserUnauthorizedException;
+import com.crave.crave_backend.exception.EntityNotFoundException;
 import com.crave.crave_backend.repository.UserRepository;
 
 @Component
@@ -44,7 +44,7 @@ public class UserValidation {
 	public void validateUser(Long userId) {
 		Optional<User> userOptional = userRepository.findById(userId);
 		if (userOptional.isEmpty()) {
-			throw new UserUnauthorizedException(String.format(ErrorMessageConstants.UNAUTHORIZED), userId);
+			throw new EntityNotFoundException(String.format(ErrorMessageConstants.ENTITY_NOT_FOUND, User.class.getSimpleName()));
 		}
 	}
 }

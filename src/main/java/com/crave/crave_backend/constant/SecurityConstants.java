@@ -10,10 +10,15 @@ public interface SecurityConstants {
 	
 	String BEARER_PREFIX = "Bearer ";
 	
+	String SHA_256_ALGORITHM = "SHA-256";
+	
 	Integer BEARER_PREFIX_LENGTH = 7;
 	
-	Long ONE_HOUR_IN_MILLISECONDS = TimeUnit.HOURS.toMillis(1);
+	Long ACCESS_TOKEN_EXPIRATION = TimeUnit.HOURS.toMillis(1);
 	
+	Long ref = TimeUnit.MINUTES.toMillis(1);
+	
+	Long REFRESH_TOKEN_EXPIRATION = TimeUnit.DAYS.toMillis(30);
+		
 	String REQUEST_ID = "requestId";
-	
 }

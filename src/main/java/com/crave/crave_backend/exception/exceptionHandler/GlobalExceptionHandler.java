@@ -11,13 +11,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import com.crave.crave_backend.constant.ErrorMessageConstants;
 import com.crave.crave_backend.dto.out.ErrorResponseOutDto;
 import com.crave.crave_backend.exception.EntityConflictException;
 import com.crave.crave_backend.exception.EntityNotFoundException;
-import com.crave.crave_backend.exception.UserUnauthorizedException;
-
+import com.crave.crave_backend.exception.ExpiredRefreshJwtException;
 import io.jsonwebtoken.JwtException;
 
 @RestControllerAdvice
@@ -49,14 +47,6 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 				.body(new ErrorResponseOutDto(List.of(badCredentialsException.getMessage())));
 	}
-
-	@ExceptionHandler(UserUnauthorizedException.class)
-	public ResponseEntity<ErrorResponseOutDto> handleUnauthorizedException(
-			UserUnauthorizedException userUnauthorizedException) {
-		log.warn("event=Authentication concistency validation failed userId={}", userUnauthorizedException.getUserId());
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-				.body(new ErrorResponseOutDto(List.of(userUnauthorizedException.getMessage())));
-	}
 	
 	@ExceptionHandler(JwtException.class)
 	public ResponseEntity<ErrorResponseOutDto> handleJwtException(JwtException jwtException) {
@@ -64,7 +54,14 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 				.body(new ErrorResponseOutDto(List.of(ErrorMessageConstants.UNAUTHORIZED)));
 	}
-
+	
+	@ExceptionHandler(ExpiredRefreshJwtException.class)
+	public ResponseEntity<ErrorResponseOutDto> handleExpiredRefreshJwtException(ExpiredRefreshJwtException expiredRefreshJwtException) {
+		log.warn("event=Refresh token expired userId={}", expiredRefreshJwtException.getUserId());
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body(new ErrorResponseOutDto(List.of(ErrorMessageConstants.UNAUTHORIZED)));
+	}
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponseOutDto> handleMethodArgumentNotValidException(
 			MethodArgumentNotValidException methodArgumentNotValidException) {
