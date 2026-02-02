@@ -41,6 +41,7 @@ public class SecurityConfiguration {
 		httpSecurity.authorizeHttpRequests(auth -> auth
 				.requestMatchers(HttpMethod.POST, ApiPathConstants.PublicApiRoutes.REGISTER_USER).permitAll()
 				.requestMatchers(HttpMethod.POST, ApiPathConstants.PublicApiRoutes.USER_LOGIN).permitAll()
+				.requestMatchers(HttpMethod.POST, ApiPathConstants.PublicApiRoutes.REFRESH_TOKEN).permitAll()
 				.anyRequest().authenticated());
 		
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -53,6 +54,7 @@ public class SecurityConfiguration {
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
 	@Bean
 	public UserDetailsService userDetailsService() {
 	    return username -> {

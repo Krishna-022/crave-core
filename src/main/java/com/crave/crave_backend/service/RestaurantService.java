@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.crave.crave_backend.constant.DatabaseConstraintNames;
 import com.crave.crave_backend.constant.EntityConflictLogConstants;
 import com.crave.crave_backend.constant.ErrorMessageConstants;
-import com.crave.crave_backend.dto.in.RegisterRestaurantIndto;
+import com.crave.crave_backend.dto.in.RegisterRestaurantInDto;
 import com.crave.crave_backend.entity.Restaurant;
 import com.crave.crave_backend.exception.EntityConflictException;
 import com.crave.crave_backend.repository.RestaurantRepository;
@@ -22,15 +22,15 @@ public class RestaurantService {
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 
-	public Long registerRestaurant(RegisterRestaurantIndto registerRestaurantIndto, byte[] validatedImage) {
+	public Long registerRestaurant(RegisterRestaurantInDto registerRestaurantInDto, byte[] validatedImage) {
 		Restaurant restaurant = new Restaurant();
-		restaurant.setName(registerRestaurantIndto.getName());
-		restaurant.setContactNumber(registerRestaurantIndto.getContactNumber());
-		restaurant.setEmail(registerRestaurantIndto.getEmail());
-		restaurant.setBuildingNumber(registerRestaurantIndto.getBuildingNumber());
-		restaurant.setCityName(registerRestaurantIndto.getCityName());
-		restaurant.setPinCode(registerRestaurantIndto.getPinCode());
-		restaurant.setStateName(registerRestaurantIndto.getStateName());
+		restaurant.setName(registerRestaurantInDto.getName());
+		restaurant.setContactNumber(registerRestaurantInDto.getContactNumber());
+		restaurant.setEmail(registerRestaurantInDto.getEmail());
+		restaurant.setBuildingNumber(registerRestaurantInDto.getBuildingNumber());
+		restaurant.setCityName(registerRestaurantInDto.getCityName());
+		restaurant.setPinCode(registerRestaurantInDto.getPinCode());
+		restaurant.setStateName(registerRestaurantInDto.getStateName());
 		Long userId = Long.parseLong((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		restaurant.setUserId(userId);
 		restaurant.setImage(validatedImage);

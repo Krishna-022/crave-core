@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.crave.crave_backend.constant.EntityConflictLogConstants;
 import com.crave.crave_backend.constant.ErrorMessageConstants;
-import com.crave.crave_backend.dto.in.RegisterRestaurantIndto;
+import com.crave.crave_backend.dto.in.RegisterRestaurantInDto;
 import com.crave.crave_backend.entity.Restaurant;
 import com.crave.crave_backend.exception.EntityConflictException;
 import com.crave.crave_backend.exception.InvalidImageException;
@@ -26,11 +26,11 @@ public class RestaurantValidation {
 	@Autowired
 	private UserValidation userValidation;
 	
-	public byte[] validateRestaurantRegistrationDetails(RegisterRestaurantIndto registerRestaurantIndto) {
+	public byte[] validateRestaurantRegistrationDetails(RegisterRestaurantInDto registerRestaurantInDto) {
 		Long userId = Long.parseLong((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		userValidation.validateUser(userId);
-		byte[] validatedImage = validateImage(registerRestaurantIndto.getImage());
-		validateRegistrationDetails(registerRestaurantIndto.getContactNumber(), registerRestaurantIndto.getEmail(), registerRestaurantIndto.getName());
+		byte[] validatedImage = validateImage(registerRestaurantInDto.getImage());
+		validateRegistrationDetails(registerRestaurantInDto.getContactNumber(), registerRestaurantInDto.getEmail(), registerRestaurantInDto.getName());
 		return validatedImage;
 	}
 	
