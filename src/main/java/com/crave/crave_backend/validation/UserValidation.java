@@ -2,12 +2,14 @@ package com.crave.crave_backend.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.crave.crave_backend.constant.EntityConflictLogConstants;
 import com.crave.crave_backend.constant.ErrorMessageConstants;
 import com.crave.crave_backend.entity.User;
 import com.crave.crave_backend.exception.EntityConflictException;
+import com.crave.crave_backend.exception.UserUnauthorizedException;
 import com.crave.crave_backend.repository.UserRepository;
 
 @Component
@@ -26,7 +28,6 @@ public class UserValidation {
 			
 			for (int i = 0; i < userList.size(); i++) {
 				User user = userList.get(i);
-				
 				if (contactNumber.equals(user.getContactNumber())) {
 		            messageList.add(String.format(ErrorMessageConstants.ENTITY_CONFLICT, entity, EntityConflictLogConstants.CONTACT_NUMBER, contactNumber));
 		            conflictingFieldsList.add(EntityConflictLogConstants.CONTACT_NUMBER);
@@ -37,6 +38,13 @@ public class UserValidation {
 		        }
 			}
 			throw new EntityConflictException(messageList, conflictingFieldsList, EntityConflictLogConstants.USER);
+		}
+	}
+	
+	public void validateUser(Long userId) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		if (userOptional.isEmpty()) {
+			throw new UserUnauthorizedException(String.format(ErrorMessageConstants.UNAUTHORIZED), userId);
 		}
 	}
 }

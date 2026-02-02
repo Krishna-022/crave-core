@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ErrorResponseOutDto {
 	private List<String> message;
-	
+
 	private String timestamp;
 
 	public String getTimestamp() {
@@ -22,7 +22,8 @@ public class ErrorResponseOutDto {
 		this.timestamp = Instant.now().toString();
 	}
 
-	public ErrorResponseOutDto() {}
+	public ErrorResponseOutDto() {
+	}
 
 	public List<String> getMessage() {
 		return message;
